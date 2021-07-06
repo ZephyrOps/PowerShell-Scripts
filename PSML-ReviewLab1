@@ -28,3 +28,5 @@ ConvertTo-CSV -NoTypeInformation
 Select Name,DisplayName,Status | 
 ConvertTo-HTML | 
 Out-File C:\Users\Shawn\Desktop\ServiceReport.html
+
+# Refer to ServiceReport.html for the formatting adjustments.
