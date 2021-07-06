@@ -1,0 +1,25 @@
+1.) Get-EventLog -LogName Application -newest 100
+
+2.) Get-Process -ComputerName . | 
+Select VM,name,id | 
+Sort-Object -property VM,name -desc
+
+3.) Get-Service -ComputerName . | 
+Select-Object -property name,Status | 
+Sort-Object -property Status -descending | 
+Export-CSV -path C:\Users\shawn\Desktop\Exports -NoTypeInformation
+
+4.) Set-Service -name BITS -StartupType Manual -whatif
+
+*5.) Get-ChildItem -path C:\ -recurse -file -Filter 'Win*.*' 
+
+6.) Get-ChildItem (dir) | 
+Out-File C:\Dir.txt
+
+7.) Get-EventLog -logName Security -newest 20 | 
+ConvertTo-XML | 
+Format-Custom #Format custom to make the .xml object readable
+
+8.) Get-EventLog -list | 
+Select-Object LogDisplayName,MaximumKilobytes,OverflowAction | 
+ConvertTo-CSV -NoTypeInformation
