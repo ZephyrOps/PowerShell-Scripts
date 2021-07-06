@@ -23,3 +23,8 @@ Format-Custom #Format custom to make the .xml object readable
 8.) Get-EventLog -list | 
 Select-Object LogDisplayName,MaximumKilobytes,OverflowAction | 
 ConvertTo-CSV -NoTypeInformation
+
+9.) Get-Service | 
+Select Name,DisplayName,Status | 
+ConvertTo-HTML | 
+Out-File C:\Users\Shawn\Desktop\ServiceReport.html
