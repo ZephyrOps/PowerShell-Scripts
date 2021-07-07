@@ -39,3 +39,5 @@ Out-File C:\Users\Shawn\Desktop\ServiceReport.html
 12.) pwd <# 'Print Working Directory' #>
 
 13.) Get-History -ID 28 | Invoke-History
+
+14.) Limit-EventLog -LogName Security -OverflowAction OverwriteAsNeeded
