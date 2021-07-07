@@ -30,3 +30,12 @@ ConvertTo-HTML |
 Out-File C:\Users\Shawn\Desktop\ServiceReport.html
 
 # Refer to ServiceReport.html for the formatting adjustments.
+
+10a.) New-Alias -name D -value Get-ChildItem | Export-Alias -path C:\Users\Shawn\Desktop\Alias
+10b.) Import-Alias -path C:\Users\Shawn\Desktop\Alias
+
+11.) Get-HotFix | where-object {($_.Description -eq "Update") -or ($_.Description -eq "Hotfix")}
+
+12.) pwd <# 'Print Working Directory' #>
+
+13.) Get-History -ID 28 | Invoke-History
