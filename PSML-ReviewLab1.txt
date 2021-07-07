@@ -40,4 +40,6 @@ Out-File C:\Users\Shawn\Desktop\ServiceReport.html
 
 13.) Get-History -ID 28 | Invoke-History
 
-14.) Limit-EventLog -LogName Security -OverflowAction OverwriteAsNeeded
+14.) Limit-EventLog -LogName Security -OverflowAction OverwriteAsNeeded # Don't have permission to do this on a normal user account in Win10.
+
+15.) 
