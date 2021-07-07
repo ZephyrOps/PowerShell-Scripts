@@ -42,4 +42,11 @@ Out-File C:\Users\Shawn\Desktop\ServiceReport.html
 
 14.) Limit-EventLog -LogName Security -OverflowAction OverwriteAsNeeded # Don't have permission to do this on a normal user account in Win10.
 
-15.) 
+15.) New-Item -Path C:\ -ItemType Directory -name Review
+
+16.) Get-ItemProperty -path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders'
+
+17.) Restart-Computer, Stop-Computer, Remove-Computer, Restore-Computer
+
+18.) Set-ItemProperty
+
