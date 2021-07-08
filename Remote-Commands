@@ -8,6 +8,15 @@ Invoke-Command -scriptBlock { get-service | where-object {$_.Status -eq 'Running
 -computername localhost -credential shawn | 
 Format-Wide
 
-Invoke-Command -ScriptBlock
-{Get-Process | Select name,VM | Sort-object VM -desc | Select -first 10 }
+Invoke-Command -ScriptBlock {Get-Process | Select name,VM | Sort-object VM -desc | Select -first 10 }
 -computerName localhost,localhost -credential shawn
+
+Invoke-Command -scriptBlock { Get-EventLog -LogName Application -newest 100 } 
+-computerName (Get-Content C:\Users\shawn\Desktop\Names.txt) -credential shawn | 
+Sort-Object -property Index 
+# Sort by Index allows us to verify three copies of each localhost log
+
+Invoke-Command -scriptBlock 
+{ Get-ItemProperty -path HKLM:\Software\Microsoft\'Windows NT'\CurrentVersion\ | 
+Select ProductName,EditionID,CurrentVersion } 
+-computerName localhost -credential Shawn
