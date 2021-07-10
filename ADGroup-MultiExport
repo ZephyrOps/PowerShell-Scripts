@@ -1,3 +1,5 @@
+<# This script is designed to take a .csv formatted list of groups in a Groups.txt file and pull a recursive report of the users in each group. #>
+
 $Groups = Get-Content -Path 'C:\Users\44724\Desktop\Scripting\Groups.txt'
 
 foreach ($Group in $Groups)
