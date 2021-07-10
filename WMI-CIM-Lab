@@ -19,3 +19,9 @@ Get-WMIObject -class Win32_Service |
 Select-Object Name,Status,StartMode,StartName
 <# Pulls all services and formats into a table with Service Name, Status, Start Mode, and Starting User Name #>
 
+Get-CIMClass -NameSpace root/SecurityCenter2 -className *Product*
+
+Get-CIMInstance -className AntiVirusProduct -computerName localhost nameSpace root/SecurityCenter2
+Get-CIMInstance -className AntiSpywareProduct -nameSpace root/SecurityCenter2
+Get-CIMInstance -className AntiSpywareProduct -nameSpace root/SecurityCenter2
+<# Query local machine or a specified computerName for installed Firewall,AntiVirus,or Antimalware products. #>
