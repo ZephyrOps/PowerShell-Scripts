@@ -10,5 +10,12 @@ format-table @{label='ComputerName';expression={$_.__SERVER}},
 @{label='OSDescription';expression={$_.Caption}},
 @{label='BIOSSerial';expression={Get-WMIObject -class Win32_BIOS -computerName $_.__SERVER | 
 select-object -expandProperty BIOSVersion}} -autoSize
-
 <# Create table-formatted output that includes computer name, OS Build Number & Description, and BIOS Version. #>
+
+Get-WMI-Object Win32_QuickFixEngineering
+<# Same as Get-Hotfix cmdlet #>
+
+Get-WMIObject -class Win32_Service | 
+Select-Object Name,Status,StartMode,StartName
+<# Pulls all services and formats into a table with Service Name, Status, Start Mode, and Starting User Name #>
+
