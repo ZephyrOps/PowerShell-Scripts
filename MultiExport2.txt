@@ -1,6 +1,0 @@
-$Groups = Get-Content -Path 'C:\Users\44724\Desktop\Scripting\Groups.txt'
-
-foreach ($Group in $Groups)
-{
-Get-ADGroupMember -Identity $Group  -Recursive | Get-ADUser -Properties Mail | select name,mail,samaccountname | export-csv -Path "C:\Users\44724\Desktop\Scripting\Export\$Group.csv"  -NoTypeInformation
-}
