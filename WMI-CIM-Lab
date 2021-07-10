@@ -1,0 +1,14 @@
+<# This file is based on PSML's Chapter 14 lab. To help identify WMI classes, I'll be using Vinay Pamnani's WMI Explorer which you can find at the link below:
+https://github.com/vinaypamnani/wmie2/releases/tag/v2.0.0.2 #>
+
+Get-WMIObject -class Win32_NetworkAdapterConfiguration
+<# Allows you to see the current IP address associated with each network adapter. If you pipe to gm, can you see ReleaseDHCPLease and RenewDHCPLease methods. #>
+
+Get-WMIObject -class Win32_OperatingSystem -computer localhost | 
+format-table @{label='ComputerName';expression={$_.__SERVER}},
+@{label='OSBuildNumber';expression={$_.BuildNumber}},
+@{label='OSDescription';expression={$_.Caption}},
+@{label='BIOSSerial';expression={Get-WMIObject -class Win32_BIOS -computerName $_.__SERVER | 
+select-object -expandProperty BIOSVersion}} -autoSize
+
+<# Create table-formatted output that includes computer name, OS Build Number & Description, and BIOS Version. #>
