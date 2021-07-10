@@ -1,5 +1,5 @@
 <# These scripts are based on the labs from PSML Lab 13. I had some difficulty getting these scripts working with the default
-Windows 10 functionality. Not only do you need to make WSMAN is enabled on both client and server (which in this case is localhost),
+Windows 10 functionality. Not only do you need to make sure WSMAN is enabled on both client and server (which in this case is localhost),
 you also need to check the WSMAN PSProvider values for Client and Server to allow for unencrypted connections.(cd WSMAN:\localhost\)
 alongside winrm quickconfig. You will get prompted for login credentials and you must use the -credential tag to sign in with an account
 on the client computer. #>
