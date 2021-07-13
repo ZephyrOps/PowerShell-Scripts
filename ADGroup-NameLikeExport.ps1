@@ -5,5 +5,5 @@ You can select which properties to use in the export by changing the properties 
 You will need to include a Path for the Export-CSV command to complete the export. You can also omit it to run it in-line. #>
 
 Get-ADGroup -Filter { Name -like '*MATCH_STRING*' } -Properties * |
-Select-Property samAccountName,Name |
+Select-Object samAccountName,Name |
 Export-CSV -Path PATH_HERE.csv -NoTypeInformation
