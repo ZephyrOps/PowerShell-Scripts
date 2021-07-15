@@ -1,5 +1,4 @@
-<# This script can be used to find a list of all groups with a certain sub-string in their name.
-You can select which properties to use in the export by changing the properties in the Select-Object command of the scriptBlock. #>
+<# This script can be used to find a list of all groups with a certain keyword in their name. #>
 [CmdletBinding()]
 param (
     [Parameter(Mandatory=$True,HelpMessage='Please enter a keyword string to search for similar groups')
