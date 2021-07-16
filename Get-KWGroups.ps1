@@ -17,7 +17,6 @@ Get-KWGroups -q 'Iris'
 Finds all groups with 'Iris' in their names using the shortened version of the -query alias.
 #>
 [CmdletBinding()]
-
 param (
     [Parameter(Mandatory=$True,HelpMessage='Please enter a keyword string to search for similar groups')]
     [Alias('query')]
@@ -25,7 +24,6 @@ param (
     [Parameter(Mandatory=$False)]
     [String] $LDAP=''
     )
-
 if ($LDAP -eq '') {
     $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
     $result = Get-ADGroup -Filter "Name -like '*$match*'" -Properties * | 
@@ -39,5 +37,4 @@ if ($LDAP -eq '') {
     $stopwatch.Stop()
     Write-Verbose "With an LDAP filter, this script took $($stopwatch.ElapsedMilliseconds/1000.0) seconds to run and returned $($result.Count) results."
 }
-
 Write-Output $result
