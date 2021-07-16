@@ -10,10 +10,11 @@ param (
     [Alias('target')]
     [string] $remotetarget
     )
+if ($remotetarget -ne $null) {
+    Get-WmiObject -class Win32_LogicalDisk -ComputerName $remotetarget | Get-Member
+}    
 Get-ADGroup -Filter "Name -like '*$match*'" -Properties * | 
 Select-Object name,CanonicalName,Created
-#if ($remotetarget -ne $null) {
-#    Invoke-Command -ScriptBlock {
 #        Get-ADGroup -Filter "Name -like '*$match*'" -Properties * | 
 #        Select-Object name,CanonicalName,Created | 
 #        Export-Csv -path "$HOME\Desktop\Name Like $($match).csv" -NoTypeInformation
