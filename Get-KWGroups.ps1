@@ -23,8 +23,21 @@ param (
     [Alias('query')]
     [String] $match,
     [Parameter(Mandatory=$False)]
-    [String] $LDAP
+    [String] $LDAP=''
     )
 
-Get-ADGroup -Filter "Name -like '*$match*'" -Properties * | 
-Select-Object name,CanonicalName,Created
+if ($LDAP -eq '') {
+    $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+    $result = Get-ADGroup -Filter "Name -like '*$match*'" -Properties * | 
+    Select-Object name,CanonicalName,Created
+    $stopwatch.Stop()
+    Write-Verbose "Without an LDAP filter, this script took $($stopwatch.ElapsedMilliseconds/1000.0) seconds to run and returned $($result.Count) results."
+} else {
+    $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+    $result = Get-ADGroup -Filter "Name -like '*$match*'" -searchBase $LDAP -Properties * | 
+    Select-Object name,CanonicalName,Created
+    $stopwatch.Stop()
+    Write-Verbose "With an LDAP filter, this script took $($stopwatch.ElapsedMilliseconds/1000.0) seconds to run and returned $($result.Count) results."
+}
+
+Write-Output $result
