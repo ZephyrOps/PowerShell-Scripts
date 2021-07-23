@@ -1,3 +1,13 @@
+<#
+.SYNOPSIS
+Get-SystemInformation uses a combination of WMI objects and other cmdlets to generate a table of
+key troubleshooting information.
+.DESCRIPTION
+Get-SystemInformation queries various aspects of the hardware and software to make troubleshooting 
+the configuration of a local or remote computer easier. It contains BIOS settings information, registry keys,
+version status, drivers, disk space, and more.
+#>
+[CmdletBinding()]
 $BIOSInfo = Get-CIMInstance CIM_BIOSElement | Select-Object SerialNumber,Name
 #$BIOSInterface = Get-WmiObject -Namespace root\wmi -Class Lenovo_BiosSetting | Select-Object CurrentSetting
 $DiskInfo = Get-WmiObject Win32_logicaldisk -Filter "DriveType = '3'" |
