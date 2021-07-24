@@ -21,5 +21,6 @@ $hashTable = [ordered]@{"Computer Model"=$model
                         "Disk_FreeSpace"=$DiskInfo.FreeSpaceGB
                         "Disk_MaxSpace"=$DiskInfo.Capacity
                         "OS Version"=$OSVersion
-                        "OS Build"=(Get-WMIObject Win32_OperatingSystem).BuildNumber}
+                        "OS Build"=(Get-WMIObject Win32_OperatingSystem).BuildNumber
+                        "IP"=Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias "Wi-Fi"}
 return $hashTable
