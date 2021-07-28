@@ -9,7 +9,7 @@ group and Write-Host the results.
 #>
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory=$True,HelpMessage="Please enter the E-Code of the user you`'d like to Enable Hubspot for")]
+    [Parameter(Mandatory=$True,HelpMessage="Please enter the E-Code of the user you`'d like to enable the Hubspot plugin for")]
     [String] $ecode,
     [Parameter(Mandatory=$False)]
     [Bool] $test=$False
