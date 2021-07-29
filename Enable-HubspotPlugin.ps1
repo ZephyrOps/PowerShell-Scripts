@@ -28,11 +28,11 @@ $user = Get-AzureADUser -searchString $ecode
 $userID = $user.objectID
 
 foreach ($group in $hubSpotGroups) {
-    Add-AzureADGroupMember -objectID $group.objectID -refObjectID $userID
+    Add-AzureADGroupMember -objectID ($group).objectID -refObjectID $userID
 }
 
 if ($test=$True) {
     foreach ($group in $hubSpotGroups) {
-        Remove-AzureADGroupMember -memberID $user.objectID -objectID $group.objectID
+        Remove-AzureADGroupMember -memberID $user.objectID -objectID ($group).objectID
     }
 }
