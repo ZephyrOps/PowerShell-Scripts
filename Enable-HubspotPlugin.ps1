@@ -29,12 +29,10 @@ $userID = $user.objectID
 
 foreach ($group in $hubSpotGroups) {
     Add-AzureADGroupMember -objectID $group.objectID -refObjectID $userID
-    Write-Host "User successfully added to '$($group.Name)' group" -ForegroundColor "Green"
 }
 
 if ($test=$True) {
     foreach ($group in $hubSpotGroups) {
         Remove-AzureADGroupMember -memberID $user.objectID -objectID $group.objectID
-        Write-Host "User succesfully removed from '$($group.Name)' group" -ForegroundColor "Yellow"
     }
 }
