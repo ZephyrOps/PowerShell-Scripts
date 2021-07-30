@@ -9,10 +9,10 @@ group and Write-Host the results.
 #>
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory=$True,HelpMessage="Please enter the E-Code of the user you`'d like to enable the Hubspot plugin for")]
-    [String] $ecode,
+    [Parameter(Mandatory=$True,HelpMessage="Please enter the employee Code of the user you`'d like to Enable Hubspot for")]
+    [String] $EmployeeCode,
     [Parameter(Mandatory=$False)]
-    [Bool] $test=$False
+    [Bool] $test=$True
 )
 
 if (Get-Module -ListAvailable -Name "AzureAD") {
@@ -22,17 +22,14 @@ if (Get-Module -ListAvailable -Name "AzureAD") {
         Install-Module -name "AzureAD"
 }
 
-Connect-AzureAD # Proceed through MFA sign-in prompt to authenticate elevated account credentials
-$hubSpotGroups = Get-AzureADGroup -searchString "HubSpot"
-$user = Get-AzureADUser -searchString $ecode
-$userID = $user.objectID
+$NULL = Connect-AzureAD # Proceed through MFA sign-in prompt to authenticate elevated account credentials
+$hubSpotGroup = Get-AzureADGroup -searchString "HubSpot Enable Outlook Add-in"
+$user = Get-AzureADUser -searchString $EmployeeCode
 
-foreach ($group in $hubSpotGroups) {
-    Add-AzureADGroupMember -objectID ($group).objectID -refObjectID $userID
-}
+Add-AzureADGroupMember -objectID $hubSpotGroup.objectID -refObjectID $user.ObjectID
+Write-Host "User '$($user.DisplayName)' was successfully added to the '$($hubSpotGroup.DisplayName)' group in Azure AD." -ForegroundColor "Green"
 
 if ($test=$True) {
-    foreach ($group in $hubSpotGroups) {
-        Remove-AzureADGroupMember -memberID $user.objectID -objectID ($group).objectID
-    }
+    Remove-AzureADGroupMember -memberID $user.objectID -objectID $hubSpotGroup.objectID
+    Write-Host "User '$($user.DisplayName) was successfully removed from the '$($hubSpotGroup.DisplayName)' group in Azure AD" -ForegroundColor "Yellow"
 }
