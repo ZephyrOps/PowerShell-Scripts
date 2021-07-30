@@ -15,4 +15,3 @@ Get-ADPrincipalGroupMembership $user.SamAccountName |
 Select-object Name,distinguishedName | 
 Export-CSV -path "$HOME\Desktop\Scripting\$($User.Name) Group Export.csv" -NoTypeInformation
 }
-Update
