@@ -1,15 +1,15 @@
 <#
 .SYNOPSIS
 This script is used to enable the HubSpot plugin in Outlook for the Desktop application and the Office 365 Online version.
-.PARAMETER user
+.PARAMETER User
 This parameter accepts an employee code or object ID.
 .PARAMETER test
-This parameter can be used to confirm which groups you are adding a user to. It will both add and remove the user from the
+This parameter can be used to confirm which groups you are adding a User to. It will both add and remove the User from the
 group and Write-Host the results.
 #>
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory=$True,HelpMessage="Please enter the employee Code of the user you`'d like to Enable Hubspot for")]
+    [Parameter(Mandatory=$True,HelpMessage="Please enter the employee Code of the User you`'d like to Enable Hubspot for")]
     [String] $EmployeeCode,
     [Parameter(Mandatory=$False)]
     [Bool] $test=$True
@@ -23,13 +23,29 @@ if (Get-Module -ListAvailable -Name "AzureAD") {
 }
 
 $NULL = Connect-AzureAD # Proceed through MFA sign-in prompt to authenticate elevated account credentials
-$hubSpotGroup = Get-AzureADGroup -searchString "HubSpot Enable Outlook Add-in"
-$user = Get-AzureADUser -searchString $EmployeeCode
+$SelectGroups = Get-AzureADGroup -searchString "HubSpot" | Out-GridView -Title "Select the groups you would like to change" -PassThru
+$User = Get-AzureADUser -searchString $EmployeeCode
 
-Add-AzureADGroupMember -objectID $hubSpotGroup.objectID -refObjectID $user.ObjectID
-Write-Host "User '$($user.DisplayName)' was successfully added to the '$($hubSpotGroup.DisplayName)' group in Azure AD." -ForegroundColor "Green"
+foreach ($Group in $SelectGroups) {
+    if ($NULL -ne $Group.OnPremisesSecurityIdentifier) { # This group in an on-premises Active Directory group
+        Add-ADGroupMember -Identity $Group.DisplayName -Members $EmployeeCode
+        Write-Host "User '$($User.DisplayName)' was successfully added to the '$($Group.DisplayName)' group in AD." -ForegroundColor "Green"
+    } else {
+        Add-AzureADGroupMember -objectID $Group.objectID -refObjectID $User.ObjectID
+        Write-Host "User '$($User.DisplayName)' was successfully added to the '$($Group.DisplayName)' group in Azure AD." -ForegroundColor "Green"
+    }
+}
 
 if ($test=$True) {
-    Remove-AzureADGroupMember -memberID $user.objectID -objectID $hubSpotGroup.objectID
-    Write-Host "User '$($user.DisplayName) was successfully removed from the '$($hubSpotGroup.DisplayName)' group in Azure AD" -ForegroundColor "Yellow"
+    foreach ($Group in $SelectGroups) {
+        if ($NULL -ne $Group.OnPremisesSecurityIdentifier) {
+            Remove-ADGroupMember -Identity $Group.DisplayName -Members $EmployeeCode -Confirm:$False
+            Write-Host "User '$($User.DisplayName)' was successfully removed from the '$($Group.DisplayName)' group in AD." -ForegroundColor "Yellow"
+        } else {
+            Remove-AzureADGroupMember -memberID $User.objectID -objectID $Group.objectID
+            Write-Host "User '$($User.DisplayName)' was successfully removed from the '$($Group.DisplayName)' group in Azure AD." -ForegroundColor "Yellow"
+        }
+    }
 }
+Disconnect-AzureAD
+exit
