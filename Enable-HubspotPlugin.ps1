@@ -49,3 +49,18 @@ if ($test=$True) {
 }
 Disconnect-AzureAD
 exit
+
+<# To-do Feature Implementation:
+- Allow the user to specify the search string from command line (parameterized)
+- Allow the user to specify the search base by combining other similar scripts
+- Transition to Write-Verbose and Write-output
+- Allow the user to see feedback between adds/removes by also pulling membership before and after
+- Actually validate group changes via new queries and not just successful cmdlet runs
+- Create a basic GUI for the script.
+- Find a way to pull MFA prompt to top or make it readily accessible.
+- Update help for all features
+- Validate inputs at each step for Out-GridView no choice.
+- Create a log template for changes.
+- Use log to generate automated email informing user of changes.
+- Allow user to specify add/remove and change workflow accordingly.
+- Show group membership if below X? size #>
