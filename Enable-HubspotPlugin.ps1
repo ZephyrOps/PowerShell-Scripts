@@ -22,7 +22,12 @@ if (Get-Module -ListAvailable -Name "AzureAD") {
         Install-Module -name "AzureAD"
 }
 
+$shell = New-Object -ComObject "Shell.Application"
+$shell.minimizeall()
 $NULL = Connect-AzureAD # Proceed through MFA sign-in prompt to authenticate elevated account credentials
+$shell = New-Object -ComObject "Shell.Application"
+$shell.undominimizeall()
+
 $SelectGroups = Get-AzureADGroup -searchString "HubSpot" | Out-GridView -Title "Select the groups you would like to change" -PassThru
 $User = Get-AzureADUser -searchString $EmployeeCode
 
