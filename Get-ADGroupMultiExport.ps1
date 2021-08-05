@@ -48,12 +48,25 @@ foreach ($csv in $csvList) {
     Write-Host " -"$csv.Name
 }
 
-$excelFileName = "Group Export.xlsx"
+$folderBrowser = New-Object System.Windows.Forms.FolderBrowserDialog -Property @{
+    Description='Select the folder where you would like to store the export:'
+    RootFolder="UserProfile"
+}
+
+$dialogResult = $folderBrowser.ShowDialog((New-Object System.Windows.Forms.Form -Property @{TopMost = $true }))
+
+if ($DialogResult -eq "OK") {
+    $outputPath = $folderBrowser.selectedPath
+} else {
+    exit
+}
+
+$excelFileName = "\Group Export.xlsx"
 
 foreach ($csv in $csvList) {
     $csvPath = "$HOME\Downloads\ExportTemp\" + $csv.Name
     $worksheetName = ($csv.Name).TrimEnd(" Export.csv")
-    Import-Csv -Path $csvPath | Export-Excel -Path "$HOME\Downloads\$excelFileName" -WorkSheetname $worksheetName -AutoSize -FreezeTopRow -BoldTopRow
+    Import-Csv -Path $csvPath | Export-Excel -Path ($outputPath+$excelFileName) -WorkSheetname $worksheetName -AutoSize -FreezeTopRow -BoldTopRow
 }
 
 Remove-Item -Path "$HOME\Downloads\ExportTemp" -Recurse -Force
