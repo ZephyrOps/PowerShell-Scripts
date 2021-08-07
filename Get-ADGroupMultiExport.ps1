@@ -24,19 +24,18 @@ $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog -Property @{
 
 # Validate that a file was received by the dialog before using Get-Content. Bring dialog box to TopMost
 
-<# Working on a new while loop to confirm close
-
 Do {
     $DialogResult = $FileBrowser.ShowDialog((New-Object System.Windows.Forms.Form -Property @{TopMost = $true }))
-} While ($DialogResult -ne "OK") {
+    if ($dialogResult -ne "OK") {
         $confirmation = Read-Host -Prompt "Are you sure you want to cancel this script? y/n"
-            if ($confirmation -eq "y") {
-                exit
-            } else {
-                $DialogResult = $FileBrowser.ShowDialog((New-Object System.Windows.Forms.Form -Property @{TopMost = $true }))
-            }
-}
-#>
+        if ($confirmation -eq "n") {
+            continue
+        } else {
+            Write-Host "Operation Cancelled"
+            exit
+        }
+    }
+} until($DialogResult -eq "OK")
 
 # Create a temporary directory to house all exported .csvs before merging. WiP
 
